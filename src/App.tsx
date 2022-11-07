@@ -1,14 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const sum = (q:number, n:number):number => {return q + n};
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
+          {sum(2,5)}
         </p>
+
         <a
           className="App-link"
           href="https://reactjs.org"
