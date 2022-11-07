@@ -1,26 +1,20 @@
 import './App.css';
-
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Home from './pages/Home';
+import Borrow from './pages/Borrow';
 function App() {
-  const sum = (q:number, n:number):number => {return q + n};
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-          {sum(2,5)}
-        </p>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <BrowserRouter>
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path="/borrow-book" element={<Borrow />}/>
+    </Routes>
+  </BrowserRouter>
   );
 }
 

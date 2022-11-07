@@ -1,0 +1,55 @@
+.Header-Wrapper {
+    background: #005E6B;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Header-Logo {
+    margin: 0 20px 0 0;
+    max-width: 250px;
+}
+
+nav {
+    margin: auto 0;
+}
+.Header-Link {
+    color: #F9EFE0;
+    font-size: 20px;
+    font-weight: bold;
+    margin: auto 15px;
+    text-decoration: none;
+}
+
+.Header-Search {
+    border-radius: 10px;
+    border: none;
+    width: 30%;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.Header-Language-Toggle {
+    display: inline-flex;
+    background-color: #F9EFE0;
+    border: #F9EFE0 2px;
+    border-radius: 10px;
+}
+
+.Header-Language {
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #005E6B;
+    font-size: 14px;
+    background-color: #F9EFE0;
+}
+
+
+.Header-Language.active {
+    color: #F9EFE0;
+    background-color: #FC7B4B;
+    border: none;
+    border-radius: 10px 0 0 10px;
+}
