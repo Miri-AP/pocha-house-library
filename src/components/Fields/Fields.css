@@ -1,0 +1,30 @@
+.Field-Wrapper {
+    margin: 0;
+    width: auto;
+    padding: 0 15px 0 0;
+    display: inline-block;
+}
+
+.Field-Label {
+    color: #005E6B;
+    font-weight: 500;
+    margin: 10px 10px 5px;
+}
+
+.Field-Input {
+    border: none;
+    background: #eee;
+    border-radius: 20px;
+    width: 100%;
+    outline: none;
+    padding: 10px;
+    transition: 0.3s ease all;
+    font-size: 16px;
+}
+
+.Field-Error {
+    color: red;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 5px 10px;
+}

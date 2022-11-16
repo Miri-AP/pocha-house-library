@@ -1,12 +1,12 @@
 import './Home.css'
-import Header from '../../components/Header';
+import SignUp from '../../components/SignUp';
 
 function HomePage() {
-    const logo = require("./pochaLibrary.png") as string;
+    // const logo = require("./pochaLibrary.png") as string;
     return (
-    <div>
-        <Header></Header>
-        <img src={logo} className="Pocha-Library-Logo" alt="logo" />
+    <div className='Homepage'>
+        <SignUp></SignUp>
+        {/* <img src={logo} className="Pocha-Library-Logo" alt="logo" /> */}
     </div>
     )
 }

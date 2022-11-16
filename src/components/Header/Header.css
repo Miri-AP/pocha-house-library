@@ -47,9 +47,16 @@ nav {
 }
 
 
-.Header-Language.active {
+.Header-Language.english-active {
     color: #F9EFE0;
     background-color: #FC7B4B;
     border: none;
     border-radius: 10px 0 0 10px;
+}
+
+.Header-Language.spanish-active {
+    color: #F9EFE0;
+    background-color: #FC7B4B;
+    border: none;
+    border-radius: 0 10px 10px 0;
 }
