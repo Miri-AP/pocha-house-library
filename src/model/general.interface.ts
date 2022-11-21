@@ -16,6 +16,11 @@ export type GeneralObject = {
   [key: string]: string;
 };
 
+export interface Options {
+    english: string[]
+    spanish: string[]
+}
+
 export interface SignUpPayload {
     name: string
     email: string

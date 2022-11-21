@@ -21,7 +21,6 @@ export function useInputValidation(errorMessages?: {[key in ValidityStateErrors]
       }
       console.log('firstError', firstError)
     }
-    console.log('message: ', errorMessages);
   }
 
   return {

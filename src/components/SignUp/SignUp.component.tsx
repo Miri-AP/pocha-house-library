@@ -1,35 +1,39 @@
-import './SignUp.css'
+// import './SignUp.css'
 import { useContext, useState} from 'react'
 
+// Components
 import Fields from '../Fields'
+
+//Context & Hooks
 import { GlobalContext } from '../../providers/GlobalContext/GlobalContext.provider';
 import { useFormValidation } from '../../hooks/useFormValidation.hook';
 
+// Interface & Utils
 import { FieldProps, DefaultProps, GeneralObject, SignUpPayload} from '../../model/general.interface'
-import { NAME, EMAIL, PHONE } from '../../utils/fieldProps'
+import { NAME, EMAIL, PHONE } from '../../utils/fields'
 
 
 function SignUp() {
-    const { SignUp: { title, description, form } } = useContext(GlobalContext);
+    const { SignUp: { title, description, form, formSubmit } } = useContext(GlobalContext);
     const [loading, setLoading] = useState<boolean>(false)
     const { formError, setFormError, submitHandler } = useFormValidation()
 
-    const submitCallback = async (formData: FormData) => {
+    const submitCallback = (formData: FormData) => {
     const payload : SignUpPayload = {
-        name: formData.get('name') as string,
-        email: formData.get('email') as string,
-        phone: formData.get('phone') as string,
+        name: formData.get('sign-up-name') as string,
+        email: formData.get('sign-up-email') as string,
+        phone: formData.get('sign-up-phone') as string,
     }
 
     try {
-      // TODO: redirect to recommendations page pending page creation
+      // TODO: Add User to DB
       setLoading(true)
-      await console.log(payload)
+      console.log(payload, formData.get('sign-up-name'))
     } catch(e) {
         console.log('eoo')
         setFormError(true)
     } finally {
-        console.log('finally', formError)
+        console.log('finally')
         setLoading(false)
     }
   }
@@ -40,7 +44,8 @@ function SignUp() {
             placeholder: field.placeholder,
             required: !!field?.required
         }, defaultprops)
-
+        props.id = `sign-up-${props.name}`
+        props.name = props.id
         return props
     }
 
@@ -52,6 +57,7 @@ function SignUp() {
             <p>{loading} errors: {formError}</p>
             <form
                 className='Form-Wrapper'
+                id='sign-up-form'
                 noValidate
                 onSubmit={(evt) => submitHandler(evt, submitCallback)}
             >
@@ -78,7 +84,7 @@ function SignUp() {
                     props={getFieldProps(PHONE, form.phone)}
                     initialValue={''}
                 ></Fields>
-                <input className='Form-Button' type="submit" value="Submit" />
+                <input className='Form-Button' type="submit" value={formSubmit} />
              </form>
         </>
     )

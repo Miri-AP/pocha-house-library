@@ -14,9 +14,9 @@ export function useFormValidation(nativeReportValidity = true) {
     evt: SyntheticEvent<HTMLFormElement>,
     callback: (formData:FormData) => void = () => {}
   ) => {
-    evt.preventDefault()
+    evt.preventDefault();
 
-     if (evt.currentTarget.checkValidity()) {
+    if (evt.currentTarget.checkValidity()) {
       callback(new FormData(evt.target as HTMLFormElement))
     } else {
       const {elements}  = evt.target as HTMLFormElement

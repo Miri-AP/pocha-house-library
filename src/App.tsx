@@ -9,6 +9,7 @@ import {
 // Pages:
 import Home from './pages/Home';
 import Borrow from './pages/Borrow';
+import AddBook from './components/AddBook';
 
 // Components:
 import Header from './components/Header';
@@ -28,6 +29,7 @@ function App() {
     <Routes>
       <Route index element={<Home />} />
       <Route path="/borrow-book" element={<Borrow />}/>
+      <Route path="/add-book" element={<AddBook />}/>
     </Routes>
   </GlobalContext.Provider>
   </BrowserRouter>
