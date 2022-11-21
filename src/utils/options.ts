@@ -87,6 +87,7 @@ export const genres :Options = {
         'Identidad',
         'Asiático/Isleño del Pacífico',
         'LGBTQIA+',
+        'Queer',
         'Novela gráfica',
         'Libro cómico',
         'Gente de color',

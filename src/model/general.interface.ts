@@ -1,3 +1,5 @@
+import { InputHTMLAttributes } from 'react';
+
 export interface DefaultProps {
     display: string
     id: string
@@ -15,6 +17,18 @@ export interface FieldProps extends DefaultProps {
 export type GeneralObject = {
   [key: string]: string;
 };
+
+type excludedProps = 'className' | 'onBlur' | 'onFocus' | 'onInput'
+export interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, excludedProps> {
+  initialValue?: string
+  label: string
+  props: FieldProps
+  additionalFields?: string[]
+  errorMsg?: {
+    typeMismatch: string
+    valueMissing: string
+  }
+}
 
 export interface Options {
     english: string[]

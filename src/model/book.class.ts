@@ -1,72 +1,84 @@
-import { format } from "path";
-import GoodReads from "./book/goodreads.interface";
-import OpenLibrary from "./book/openlibrary.interface";
-import PochaLibrary, { BookDetails } from "./book/pochalibrary.interface";
+import { callbackify } from "util";
+import { OpenLibraryBookDetails, KeyName } from "./book/openlibrary.interface";
+import { DefaultProps } from "./general.interface"
 
-class Book {
-    readonly isbn13 :string
-    readonly isbn10 :string
-    readonly pochaID :string
-    // readonly details :BookDetails 
+export class BookForm {
+    pochaID: string = ""
+    copies: string = '1'
+    isbn10: string;
+    isbn13: string;
+    title: string = '';
+    author: string = '';
+    publishingYear: string;
+    publishingHouse: string;
+    language: string;
+    genres: string[];
+    description: string;
+    pages: string;
 
-    constructor(private readonly data: PochaLibrary | GoodReads | OpenLibrary, isbn :string, structureType :string = 'manual') {
-        this.isbn10 = isbn.length === 10 ? isbn : ""
-        this.isbn13 = isbn.length === 13 ? isbn : ""
-        this.pochaID = ''
-        // this.details = this.cleanDetails(data, structureType)
-
+    constructor(
+        private readonly data: OpenLibraryBookDetails,
+        isbn :string
+    ) {
+        this.isbn10 = isbn.length === 10 ? isbn : this.getISBN(data.isbn_10, 10)
+        this.isbn13 = isbn.length === 13 ? isbn : this.getISBN(data.isbn_13, 13)
+        this.getBasicInfo(data)
+        this.publishingYear = data?.publish_date || ""
+        this.publishingHouse = data.publishers ? data.publishers[0] : ""
+        this.language = this.GetLang(data.languages || [])
+        this.genres = this.getGenres(data.subjects || [])
+        this.description = data.description || ''
+        this.pages = data.pagination?.replace(' p. ;', '') || ''
     }
 
-    // get author() {
-    //     switch (structureType) {
-    //         case 'goodreads':
-    //             return this.data?.author.name                     
-    //         default:
-    //             this.data.name
-    //     }
-    //     this.data
-    // }
-
-    /* cleanDetails (data: GoodReads | PochaLibrary | OpenLibrary, structureType :string) {
-        switch (structureType) {
-            case 'goodreads':
-                return this.CleanGoodData(data)
-            default:
-                return data
+    getBasicInfo(data: OpenLibraryBookDetails,
+        callback: (isbn: string) => void = () => {}) {
+        if (data.hasOwnProperty('title') || data.hasOwnProperty('by_statement')) {
+            callback(this.isbn10 || this.isbn13)
+            console.warn(`BOOK NOT FOUND: ${this.isbn13}`)
         }
-    } */
-
-    // Clean
-    CleanGoodData (data: GoodReads) :BookDetails {
-        return {
-            imageUrl: data.imageUrl,
-            language: '',
-            copies: 1,
-            pages: data.numPages,
-            format: 'Paperback',
-            condition: {
-                note: '',
-                classification: 'New'
-            },
-            genres: [],
-            description: data.description.html,
-            publishing: {
-                house: '',
-                year: 0
-            }
-        }
+        this.title = data?.title
+        this.author = data?.by_statement || ''
+        this.pochaID = this.BookCodeGenerator(this.isbn13 || this.isbn10,
+            this.title, this.author)
     }
-    
-    BookCodeGenerator(isbn :string, title :string, author :string) {
+
+    getISBN(isbn :string[] = [], len :number) {
+        if (len === 13) {
+            return isbn[0]
+        }
+
+        return isbn[0]
+    }
+
+    GetLang(langs :KeyName[]) :string {
+        const translate :{ [k: string]: string } = {
+            '/languages/eng' : "English",
+            '/languages/es' : "Spanish"
+        }
+        const lan :string = langs[0].key
+        return translate[lan]
+    }
+
+    getGenres (subjects :string[]) :string[] {
+        const genres = subjects
+        const remove = subjects.indexOf('Homosexuality')
+        if (remove >= 0) {
+            genres.splice(remove, 1, 'LGBTQIA+', 'Gay')
+        }
+        return genres
+    }
+
+    BookCodeGenerator(isbn :string, title :string, author :string, randomize :boolean = false) {
         const max = new Date().getFullYear() + Math.ceil(Math.random() * 100 + 1);
         const digits = `12348567${max}89034562`
-        const titleTrim = title.replace(/ /g,'')
-        const authorTrim = author.replace(/ /g,'')
-        const ID =  `PH${this.Randomize(2, isbn)}_${this.Randomize(6, `${titleTrim}${authorTrim}`, true)}_OD${this.Randomize(1,digits)}A`
+        const titleTrim = title.toUpperCase().replace(/ /g,'')
+        const authorTrim = author.toUpperCase().replace(/ /g,'')
+        const ID =  `PH${this.Randomize(2, isbn)}_${this.Randomize(6, `${titleTrim}${authorTrim}${titleTrim}`, randomize)}_OD${this.Randomize(1,digits)}A`
                 
         // Recursive - when BookID is repeated
         // if(IsRepeated("BookIDs", ID)) {
-        //     return BookCodeGenerator()
+        //     return BookCodeGenerator(isbn, titleTrim, authorTrim, randomize)
         // }
         
         // Adds Book to PH Library
@@ -84,7 +96,6 @@ class Book {
         
         return result;
     }
-
 }
 
-export default Book;
+export default BookForm;

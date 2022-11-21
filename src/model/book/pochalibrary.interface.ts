@@ -3,7 +3,8 @@ export interface PochaLibrary {
     isbn10: string
     isbn13: string
     title: string
-    author: string
+    author: Authors
+    copies: string
     details: BookDetails
 }
 
@@ -14,32 +15,34 @@ export interface Condition { // https://www.abebooks.com/books/rarebooks/collect
 
 export interface Series {
     name: string
-    number: number
-    description: string
+    number: string
+    description?: string
 }
 
 export interface PublisherInfo {
     house: string
-    year: number
+    year: string
 }
 
 export interface Authors {
-    illustrator: string
-    author: number
-    coAuthor: string[]
+    author: string
+    illustrator?: string[]
+    coAuthor?: string[],
+    contributor?: string[]
+    introduction?: string[],
+    editor?: string[],
+    foreword?: string[]
 }
 
 export interface BookDetails {
-    imageUrl: string
-    authors?: string
+    imageUrl?: string
     language: string
-    copies: number
-    pages: number
+    pages: string
     format: 'Hardcover' | 'Paperback' | 'Photocopy' | 'Digital' | 'fanzine' | 'Magazine'
     condition: Condition
     genres: string[]
     series?: Series
-    description: String
+    description?: string
     publishing: PublisherInfo
 }
 

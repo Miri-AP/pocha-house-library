@@ -71,12 +71,15 @@ export const SPANISH :any = {
             },
             author: {
                 label: "Autor",
-                placeholder: "Nombre(s) Apellido(s)",
+                placeholder: "Nombre del Autor",
                 errorMsg: {
                     typeMismatch: 'Por favor proporciona nombre y apellido del autor',
                     valueMissing: 'Te faltó poner el nombre completo del autor'
                 },
-                required: true
+                required: true,
+                additionalFields: [
+                   "illustrador/a", "co-author/a", "contribuidor/a", "introduccion", "editor/a", "foreword"
+                ]
             },
             illustrator: {
                 label: "Illustrador",

@@ -4,34 +4,49 @@ export interface OpenLibrary {
     preview: string
     preview_url: string
     thumbnail_url: string
-    details: BookDetails
+    details: OpenLibraryBookDetails
 }
 
-export interface BookDetails {
-    publishers: string[]
-    number_of_pages: number
+export interface OpenLibraryBookDetails {
+    publishers: string[]   
     title: string
-    physical_format: string
-    identifiers: Identifiers
-    covers: number[]
-    isbn_10: number[]
-    isbn_13: number[]
-    publish_date: string
-    key: string
-    authors: KeyName[]
-    works: KeyName[]
-    type: KeyName[]
-    subjects: string[]
-    first_sentence: TyepValue
-    latest_revision: number
-    revision: number
-    created: TyepValue
-    last_modified: TyepValue
+    local_id?: string[]
+    description?: string
+    classifications?: Identifiers
+    source_records?: string[]
+    number_of_pages?: number
+    physical_format?: string
+    identifiers?: Identifiers
+    covers?: number[]
+    isbn_10?: string[]
+    isbn_13?: string[]
+    lccn?: string[]
+    ocaid?: string
+    languages?: KeyName[]
+    pagination?: string
+    publish_date?: string
+    key?: string
+    authors?: KeyName[]
+    publish_places?: string[]
+    works?: KeyName[]
+    type?: KeyName
+    subjects?: string[]
+    first_sentence?: TyepValue
+    latest_revision?: number
+    revision?: number
+    created?: TyepValue
+    last_modified?: TyepValue
+    notes?: string
+    edition_name?: string
+    publish_country?: string
+    by_statement?: string
+    dewey_decimal_class?: string[]
+    lc_classifications?: string[]
 }
 
 export interface Identifiers {
-  goodreads: string[]
-  librarything: string[]
+  goodreads?: string[]
+  librarything?: string[]
 }
 
 export interface KeyName {
