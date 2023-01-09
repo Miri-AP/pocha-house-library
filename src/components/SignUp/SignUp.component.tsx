@@ -30,7 +30,6 @@ function SignUp() {
       setLoading(true)
       console.log(payload, formData.get('sign-up-name'))
     } catch(e) {
-        console.log('eoo')
         setFormError(true)
     } finally {
         console.log('finally')
@@ -42,10 +41,10 @@ function SignUp() {
         const props :FieldProps = Object.assign({
             label: field.label,
             placeholder: field.placeholder,
-            required: !!field?.required
+            required: !!field?.required,
+            id: `sign-up-${field.name}`
         }, defaultprops)
-        props.id = `sign-up-${props.name}`
-        props.name = props.id
+         props.name = props.id
         return props
     }
 

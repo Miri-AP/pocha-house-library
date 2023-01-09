@@ -1,7 +1,8 @@
 import Axios from 'axios'
 
-import { OpenLibrary, OpenLibraryBookDetails } from '../model/book/openlibrary.interface'
+import { OpenLibrary } from '../model/book/openlibrary.interface'
 import { OpenLibraryExplicitMock, OpenLibraryMock } from '../mocks/OpenLibrary.mock'
+import PrefilledBookInfo from '../model/PrefilledBookInfo.class'
 
 const axios = Axios.create({
   timeout: 30000
@@ -9,13 +10,12 @@ const axios = Axios.create({
 
 export const GetBookInfo = async (isbnCode :string ) :Promise<OpenLibrary> => {
   const { data } = { data:  { [`ISBN:${isbnCode}`]: OpenLibraryExplicitMock } }
-  console.log()
   return data[`ISBN:${isbnCode}`]
   // await axios.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbnCode}&jscmd=details&format=json`)
 };
 
-export const GetMoreOpenLibraryInfo = async (isbnCode :string ) :Promise<OpenLibraryBookDetails> => {
-  return OpenLibraryMock
+export const GetMoreOpenLibraryInfo = async (isbnCode :string ) :Promise<PrefilledBookInfo> => {
+  return new PrefilledBookInfo(OpenLibraryMock, isbnCode)
 
   // await axios.get(`https://openlibrary.org/isbn/${isbnCode}.json`)
 };

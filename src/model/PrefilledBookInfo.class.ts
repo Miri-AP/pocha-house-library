@@ -1,8 +1,7 @@
-import { callbackify } from "util";
 import { OpenLibraryBookDetails, KeyName } from "./book/openlibrary.interface";
-import { DefaultProps } from "./general.interface"
+import { GeneralObject } from "./general.interface";
 
-export class BookForm {
+export class PrefilledBookInfo {
     pochaID: string = ""
     copies: string = '1'
     isbn10: string;
@@ -17,7 +16,7 @@ export class BookForm {
     pages: string;
 
     constructor(
-        private readonly data: OpenLibraryBookDetails,
+        private data: OpenLibraryBookDetails,
         isbn :string
     ) {
         this.isbn10 = isbn.length === 10 ? isbn : this.getISBN(data.isbn_10, 10)
@@ -33,7 +32,7 @@ export class BookForm {
 
     getBasicInfo(data: OpenLibraryBookDetails,
         callback: (isbn: string) => void = () => {}) {
-        if (data.hasOwnProperty('title') || data.hasOwnProperty('by_statement')) {
+        if (!(data.hasOwnProperty('title') || data.hasOwnProperty('by_statement'))) {
             callback(this.isbn10 || this.isbn13)
             console.warn(`BOOK NOT FOUND: ${this.isbn13}`)
         }
@@ -52,7 +51,7 @@ export class BookForm {
     }
 
     GetLang(langs :KeyName[]) :string {
-        const translate :{ [k: string]: string } = {
+        const translate :GeneralObject = {
             '/languages/eng' : "English",
             '/languages/es' : "Spanish"
         }
@@ -98,4 +97,4 @@ export class BookForm {
     }
 }
 
-export default BookForm;
+export default PrefilledBookInfo;

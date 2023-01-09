@@ -19,7 +19,6 @@ export function useInputValidation(errorMessages?: {[key in ValidityStateErrors]
       if (firstError) {
         setErrorMessage(errorMessages[firstError] ?? '')
       }
-      console.log('firstError', firstError)
     }
   }
 

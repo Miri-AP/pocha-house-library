@@ -2,7 +2,6 @@ import { InputHTMLAttributes } from 'react';
 
 export interface DefaultProps {
     display: string
-    id: string
     type: string
     name: string
     pattern: string
@@ -12,11 +11,13 @@ export interface FieldProps extends DefaultProps {
     label: string
     placeholder: string
     required: boolean
+    "aria-label"?: string
+    id: string
 }
 
 export type GeneralObject = {
-  [key: string]: string;
-};
+  [key: string]: string
+}
 
 type excludedProps = 'className' | 'onBlur' | 'onFocus' | 'onInput'
 export interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, excludedProps> {
